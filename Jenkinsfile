@@ -1,36 +1,41 @@
 pipeline {
     agent {
-        label 'slave'
+        label 'jenkins-slave'
     }
     
-    stages{
-        stage{
-            steps('Checkout'){
+    stages {
+        stage('Checkout') {
+            steps {
                 git branch: 'main', url: 'https://github.com/Lordclintondevops/autoscaling.git'
             }
         }
-          stage{
-            steps('Terraform Init'){
+        
+        stage('Terraform Init') {
+            steps {
                 sh 'terraform init'
             }
         }
-           stage{
-            steps('Terraform Plan'){
+        
+        stage('Terraform Plan') {
+            steps {
                 sh 'terraform plan'
             }
         }
-           stage{
-            steps('Terraform Apply -auto-approve'){
+        
+        stage('Terraform Apply -auto-approve') {
+            steps {
                 sh 'terraform apply -auto-approve'
             }
         }
-           stage{
-            steps('Sleep'){
-                sleep(120)
+        
+        stage('Sleep') {
+            steps {
+                sleep(time: 120, unit: 'SECONDS')
             }
         }
-           stage{
-            steps('Terraform destroy -auto-approve'){
+        
+        stage('Terraform destroy -auto-approve') {
+            steps {
                 sh 'terraform destroy -auto-approve'
             }
         }
