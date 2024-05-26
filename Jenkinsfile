@@ -1,12 +1,12 @@
 pipeline {
     agent {
-        label: slave
+        label 'slave'
     }
     
     stages{
         stage{
             steps('Checkout'){
-                git repo
+                git branch: 'main', url: 'https://github.com/Lordclintondevops/autoscaling.git'
             }
         }
           stage{
